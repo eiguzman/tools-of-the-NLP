@@ -168,10 +168,21 @@ def _parse_weekday(s: str, today: date) -> date | None:
     return None
 
 
+NUMBER_WORDS: dict[str, str] = {
+    "one": "1", "two": "2", "three": "3", "four": "4", "five": "5",
+    "six": "6", "seven": "7", "eight": "8", "nine": "9", "ten": "10",
+}
+
+def _replace_number_words(s: str) -> str:
+    for word, digit in NUMBER_WORDS.items():
+        s = re.sub(rf"\b{word}\b", digit, s)
+    return s
+
 def _parse(s: str, today: date) -> date | None:
     s = s.strip().lower()
     s = re.sub(r"\ba\b", "1", s)
     s = re.sub(r"\ban\b", "1", s)
+    s = _replace_number_words(s)
 
     if s == "today":
         return today
