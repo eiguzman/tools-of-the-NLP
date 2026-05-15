@@ -104,7 +104,7 @@ def _resolve_base(s: str, today: date) -> date | None:
 
 def _parse_absolute(s: str) -> date | None:
     s = s.strip()
-    match = re.match(r"^(\d{4})-(\d{1,2})-(\d{1,2})$", s)
+    match = re.match(r"^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$", s)
     if match:
         return date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
     match = re.match(r"^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$", s)
