@@ -196,6 +196,8 @@ def _parse(s: str, today: date) -> date | None:
     s = re.sub(r"\ban\b", "1", s)
     s = _replace_number_words(s)
 
+    if not s:
+        return today
     if s == "today":
         return today
     if s == "tomorrow":
