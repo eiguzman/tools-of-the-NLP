@@ -88,7 +88,7 @@ def _add_unit(base: date, unit: str, amount: int) -> date:
 def _resolve_base(s: str, today: date) -> date | None:
     s = s.strip().lower()
     s = re.sub(r"^the\s+", "", s)
-    if s in ("today", ""):
+    if s == "today":
         return today
     if s == "tomorrow":
         return today + timedelta(days=1)
@@ -196,8 +196,6 @@ def _parse(s: str, today: date) -> date | None:
     s = re.sub(r"\ban\b", "1", s)
     s = _replace_number_words(s)
 
-    if not s:
-        return today
     if s == "today":
         return today
     if s == "tomorrow":
