@@ -115,26 +115,34 @@ def _parse_absolute(s: str) -> date | None:
     )
     if match and match.group(1).lower().rstrip(".") in MONTH_MAP:
         return date(
-            int(match.group(3)), MONTH_MAP[match.group(1).lower().rstrip(".")], int(match.group(2))
+            int(match.group(3)),
+            MONTH_MAP[match.group(1).lower().rstrip(".")],
+            int(match.group(2)),
         )
     match = re.match(
         r"^([A-Za-z]+\.?)\s+" + r"(\d{1,2})" + r"\s*,?\s*(\d{4})$", s, re.IGNORECASE
     )
     if match and match.group(1).lower().rstrip(".") in MONTH_MAP:
         return date(
-            int(match.group(3)), MONTH_MAP[match.group(1).lower().rstrip(".")], int(match.group(2))
+            int(match.group(3)),
+            MONTH_MAP[match.group(1).lower().rstrip(".")],
+            int(match.group(2)),
         )
     match = re.match(
         r"^" + ORDINAL_RE + r"\s+([A-Za-z]+\.?)\s*,?\s*(\d{4})$", s, re.IGNORECASE
     )
     if match and match.group(2).lower().rstrip(".") in MONTH_MAP:
         return date(
-            int(match.group(3)), MONTH_MAP[match.group(2).lower().rstrip(".")], int(match.group(1))
+            int(match.group(3)),
+            MONTH_MAP[match.group(2).lower().rstrip(".")],
+            int(match.group(1)),
         )
     match = re.match(r"^(\d{1,2})\s+([A-Za-z]+\.?)\s*,?\s*(\d{4})$", s, re.IGNORECASE)
     if match and match.group(2).lower().rstrip(".") in MONTH_MAP:
         return date(
-            int(match.group(3)), MONTH_MAP[match.group(2).lower().rstrip(".")], int(match.group(1))
+            int(match.group(3)),
+            MONTH_MAP[match.group(2).lower().rstrip(".")],
+            int(match.group(1)),
         )
     return None
 
@@ -162,6 +170,8 @@ def _parse_weekday(s: str, today: date) -> date | None:
 
 def _parse(s: str, today: date) -> date | None:
     s = s.strip().lower()
+    s = re.sub(r"\ba\b", "1", s)
+    s = re.sub(r"\ban\b", "1", s)
 
     if s == "today":
         return today
